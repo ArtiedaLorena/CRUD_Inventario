@@ -2,6 +2,7 @@ package com.Inventario.jdbc.view;
 
 import com.Inventario.jdbc.controller.CategoriaController;
 
+
 import java.awt.Container;
 
 import javax.swing.JFrame;
@@ -19,10 +20,12 @@ public class ReporteFrame extends JFrame {
 
     private CategoriaController categoriaController;
 
+
     public ReporteFrame(ControlDeStockFrame controlDeStockFrame) {
-        super("Reporte de produtos del stock");
+        super("Reporte de productos del stock");
 
         this.categoriaController = new CategoriaController();
+
 
         Container container = getContentPane();
         setLayout(null);
@@ -46,10 +49,20 @@ public class ReporteFrame extends JFrame {
 
     private void cargaReporte() {
         var contenido = categoriaController.cargaReporte();
-        
-        // TODO
-        contenido.forEach(fila -> modelo
-                .addRow(new Object[] {}));
-    }
 
+
+        contenido.forEach(categoria -> {
+            modelo.addRow(new Object[]{categoria});
+
+            var productos = categoria.getProductos();
+            productos.forEach(producto -> modelo.addRow(
+                    new Object[]{
+                            "",
+                            producto.getNombre(),
+                            producto.getCantidad()
+                    }
+            ));
+        });
+
+    }
 }

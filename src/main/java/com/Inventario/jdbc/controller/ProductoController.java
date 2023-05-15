@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.Inventario.jdbc.dao.ProductoDAO;
 import com.Inventario.jdbc.factory.ConnectionFactory;
+import com.Inventario.jdbc.modelo.Categoria;
 import com.Inventario.jdbc.modelo.Producto;
 
 
@@ -28,7 +29,11 @@ public class ProductoController {
         return productoDao.listar();
     }
 
-    public void guardar(Producto producto) {
+    public List<Producto> listar (Categoria categoria){
+        return  productoDao.listar(categoria.getId());
+    }
+    public void guardar(Producto producto, Integer categoriaId) {
+        producto.setCategoriaId(categoriaId);
         productoDao.guardar(producto);
     }
 
